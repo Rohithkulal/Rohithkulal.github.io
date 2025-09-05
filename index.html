@@ -3,97 +3,243 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rohith Kulal — Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Manmaya-style Portfolio — Your Name</title>
+  <meta name="description" content="Minimal, red-accented developer portfolio with sections: About, Experience, Projects, Blogs, Contact. Single-file, ready for GitHub Pages." />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0f0f10; /* dark background */
+      --card:#111; 
+      --accent:#b81616; /* red accent */
+      --muted:#9aa0a6;
+      --white:#ffffff;
+      --max-width:1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Montserrat,system-ui,Arial;background:var(--bg);color:var(--white);-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+
+    .container{max-width:var(--max-width);margin:0 auto;padding:40px 24px}
+
+    /* top bar */
+    header{position:fixed;left:0;right:0;top:0;height:64px;display:flex;align-items:center;z-index:60;background:linear-gradient(180deg, rgba(0,0,0,0.6), transparent);backdrop-filter: blur(4px);}
+    .brand{font-family:'Playfair Display';margin-left:18px;font-size:18px}
+    .hamb{margin-left:auto;margin-right:24px;cursor:pointer}
+
+    /* hero */
+    .hero{min-height:84vh;display:flex;align-items:center;padding-top:64px}
+    .hero-grid{display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:center}
+    .hero-left{padding:32px}
+    h1{font-size:64px;line-height:0.95;margin:0;padding:0;font-weight:900}
+    .sub{margin-top:18px;color:var(--muted);letter-spacing:1px}
+    .cta{display:inline-flex;align-items:center;margin-top:28px;gap:14px;border-bottom:2px solid rgba(255,255,255,0.06);padding-bottom:8px}
+
+    /* big background phone icon mimic */
+    .hero-right{height:70vh;background:linear-gradient(90deg, rgba(184,20,20,1), rgba(170,10,10,0.95));border-radius:6px;position:relative;overflow:hidden}
+    .hero-right::after{content:'';position:absolute;right:-60px;top:-30px;width:260px;height:480px;border-radius:40px;background:rgba(0,0,0,0.06)}
+
+    /* sections */
+    section{padding:80px 0}
+    .section-title{font-size:42px;margin:0 0 20px 0;font-weight:800}
+
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:22px;border-radius:10px}
+    .muted{color:var(--muted)}
+
+    /* lists */
+    .experience .item,.projects .item{padding:18px 0;border-bottom:1px solid rgba(255,255,255,0.03)}
+    .label{font-weight:700}
+
+    /* contact */
+    .contact-grid{display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start}
+    .socials{display:flex;gap:12px;margin-top:18px}
+    .icon{width:44px;height:44px;border-radius:50%;display:inline-grid;place-items:center;background:rgba(255,255,255,0.04)}
+
+    /* mobile adjustments */
+    @media (max-width:900px){
+      .hero-grid{grid-template-columns:1fr}
+      h1{font-size:46px}
+      .hero-right{height:40vh}
+      .contact-grid{grid-template-columns:1fr}
+      header{padding:0 8px}
+    }
+
+    /* menu overlay */
+    .menu{position:fixed;inset:0;background:rgba(0,0,0,0.96);z-index:80;display:none;padding:48px}
+    .menu.open{display:block}
+    .menu ul{list-style:none;padding:0;margin:40px 0}
+    .menu li{font-size:34px;margin:18px 0;font-weight:700}
+    .menu .home{color:var(--accent)}
+
+    /* subtle animations (used by JS) */
+    .reveal{opacity:0;transform:translateY(20px);transition:all 650ms cubic-bezier(.2,.9,.2,1)}
+    .reveal.visible{opacity:1;transform:none}
+    .reveal-left{opacity:0;transform:translateX(-26px)}
+    .reveal-left.visible{opacity:1;transform:none}
+
+    footer{padding:30px 0;color:var(--muted)}
+
+  </style>
 </head>
 <body>
-  <!-- ====== HEADER ====== -->
   <header>
-    <div class="container">
-      <!-- Profile Picture -->
-      <img src="profile.png" alt="Profile Picture" class="profile-pic">
-
-      <h1>Hi, I’m <span class="highlight">Rohith Kulal</span></h1>
-      <p>AI/ML Engineer | Tech Enthusiast | Writer</p>
-      <nav>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="blogs.html">Blogs</a>
-        <a href="#contact">Contact</a>
-      </nav>
+    <div class="container" style="display:flex;align-items:center;">
+      <div class="brand">MANU</div>
+      <div class="hamb" id="hamb">☰</div>
     </div>
   </header>
 
-  <!-- ====== ABOUT ====== -->
-  <section id="about" class="container">
-    <h2>👨‍💻 About Me</h2>
-    <p>
-      I’m a passionate graduate in Artificial Intelligence and Machine Learning (CGPA 7.78).  
-      I’ve worked on projects like <b>Plant Leaf Disease Detection</b>, <b>Brain Tumor Detection</b>, and <b>Railway Management System</b>.  
-      I love coding, solving problems, and writing blogs to simplify complex concepts.
-    </p>
-  </section>
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <div class="reveal-left">
+            <div class="muted" style="font-weight:700;letter-spacing:1px">MANMAYA RAMA</div>
+            <h1>I'm a<br>Programmer</h1>
+            <div class="sub">It's me diving into the depths of computer world...</div>
+            <a class="cta" href="#contact">—&nbsp;&nbsp;Watch Resume</a>
+          </div>
+        </div>
 
-  <!-- ====== PROJECTS ====== -->
-<section id="projects" class="container">
-  <h2>🚀 Projects</h2>
-  <div class="grid">
-    <div class="card">
-      <h3>Plant Leaf Disease Detection</h3>
-      <p>Deep learning pipeline to detect and classify leaf diseases.</p>
-      <a href="https://github.com/Rohithkulal" target="_blank">🔗 View</a>
-    </div>
-    <div class="card">
-      <h3>Brain Tumor Detection System</h3>
-      <p>Medical imaging classification using CNNs (MRI scans).</p>
-      <a href="https://github.com/Rohithkulal" target="_blank">🔗 View</a>
-    </div>
-    <div class="card">
-      <h3>Customer Churn Prediction</h3>
-      <p>Machine learning pipeline to predict customer churn using the Telco dataset.</p>
-      <a href="https://github.com/Rohithkulal/customer-churn-prediction" target="_blank">🔗 View</a>
-    </div>
-  </div>
-</section>
+        <div class="hero-right reveal" aria-hidden="true">
+          <!-- decorative big phone / art - you can replace with an SVG or image -->
+        </div>
+      </div>
+    </section>
 
+    <!-- ABOUT -->
+    <section id="about">
+      <h2 class="section-title reveal">About Me</h2>
+      <div class="card reveal">
+        <p style="font-size:20px;margin:0;line-height:1.4"><strong>Motivated and hardworking individual</strong> with a passion for software development. Strong understanding of software development concepts and eagerness to learn new technologies.</p>
+      </div>
+    </section>
 
-   <!-- ====== BLOGS PREVIEW ====== -->
-  <section id="blogs" class="container">
-    <h2>📝 Blogs</h2>
+    <!-- EXPERIENCE -->
+    <section id="experience" class="experience">
+      <h2 class="section-title reveal">Experience</h2>
+      <div class="card reveal">
+        <div class="item">
+          <div class="label">Machine Learning Intern — Zephyr Technologies</div>
+          <div class="muted">Aug 2023 — Sep 2023</div>
+          <p class="muted">Worked on medical image classification models for kidney stone detection.</p>
+        </div>
+        <div class="item">
+          <div class="label">Project: Railway Management System</div>
+          <div class="muted">March 2023</div>
+          <p class="muted">Full SQL Server implementation and scripts.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="projects">
+      <h2 class="section-title reveal">Projects</h2>
+      <div class="card reveal">
+        <div class="item">
+          <div class="label">Plant Leaf Disease Detection</div>
+          <div class="muted">May 2024</div>
+          <p class="muted">A CNN-based classifier to detect plant leaf diseases.</p>
+        </div>
+        <div class="item">
+          <div class="label">Brain Tumor Detection System</div>
+          <div class="muted">Nov 2023</div>
+          <p class="muted">Segmentation and classification pipeline.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOGS -->
+    <section id="blogs">
+      <h2 class="section-title reveal">Blogs</h2>
+      <div class="card reveal">
+        <ul style="margin:0;padding-left:18px">
+          <li><a href="#" target="_blank">The Most Beautiful Formula in Probability</a></li>
+          <li><a href="#" target="_blank">What is a Probability Distribution — with Examples</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2 class="section-title reveal">Contact me</h2>
+      <div class="contact-grid">
+        <div class="card reveal">
+          <p class="muted">EMAIL:</p>
+          <p>youremail@example.com</p>
+          <p class="muted">PHONE:</p>
+          <p>+91 87xxxxxx61</p>
+
+          <div style="margin-top:12px">
+            <button onclick="window.location='mailto:youremail@example.com'" style="padding:12px 18px;border-radius:8px;background:var(--card);border:1px solid rgba(255,255,255,0.04);">Say Hi !!!</button>
+          </div>
+        </div>
+
+        <div class="reveal socials-col">
+          <p class="muted">I am always seeking ways to inspire. It would be a pleasure if you'd like to <strong style="color:var(--accent)">reach me</strong>.</p>
+          <div class="socials">
+            <div class="icon">f</div>
+            <div class="icon">x</div>
+            <div class="icon">in</div>
+            <div class="icon">gh</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="muted">© 2024 COPYRIGHTS. ALL RIGHTS RESERVED.</div>
+    </footer>
+  </main>
+
+  <!-- Menu overlay -->
+  <div class="menu" id="menu">
+    <div style="font-size:20px;cursor:pointer;color:var(--muted)" id="menuClose">✕</div>
     <ul>
-      <li><a href="https://medium.com/@rohith_kulal/the-most-beautiful-formula-in-probability-p-x-1-39aaef8efecb" target="_blank">
-        The Most Beautiful Formula in Probability (P(X=1))
-      </a></li>
-      <li><a href="https://medium.com/@rohith_kulal/what-is-a-probability-distribution-with-real-life-examples-71f24facba6c" target="_blank">
-        What is a Probability Distribution? (With Real-Life Examples)
-      </a></li>
+      <li class="home"><a href="#">/ Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Interests</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#blogs">Blogs</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
-    <p><a href="blogs.html">See all blogs →</a></p>
-  </section>
+  </div>
 
+  <script>
+    // Menu toggles
+    const hamb = document.getElementById('hamb');
+    const menu = document.getElementById('menu');
+    const menuClose = document.getElementById('menuClose');
+    hamb.addEventListener('click', ()=> menu.classList.add('open'))
+    menuClose.addEventListener('click', ()=> menu.classList.remove('open'))
 
+    // Reveal on scroll using IntersectionObserver
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          // if you want one-time reveal, unobserve
+          io.unobserve(entry.target);
+        }
+      })
+    },{threshold:0.14});
 
-  <!-- ====== CONTACT ====== -->
-  <section id="contact" class="container">
-    <h2>📬 Contact</h2>
-    <p>Email: <a href="mailto:rohithkulal25@gmail.com">rohithkulal25@gmail.com</a></p>
-    <p>
-      <a href="https://github.com/Rohithkulal">GitHub</a> |
-      <a href="https://www.linkedin.com/in/rohith-kulal/">LinkedIn</a> |
-      <a href="https://medium.com/@rohith_kulal">Medium</a> |
-      <a href="https://x.com/imRohi25">X (Twitter)</a>
-    </p>
-  </section>
+    document.querySelectorAll('.reveal, .reveal-left').forEach(el=>io.observe(el));
 
-  <!-- ====== FOOTER ====== -->
-  <footer>
-    <p>© <span id="year"></span> Rohith Kulal | Built with ❤️ on GitHub Pages</p>
-    <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
-  </footer>
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const href = a.getAttribute('href');
+        if(href.length>1){
+          e.preventDefault();
+          document.querySelector(href).scrollIntoView({behavior:'smooth',block:'start'});
+          menu.classList.remove('open');
+        }
+      })
+    })
+  </script>
 </body>
 </html>
-
-
-
-
-
